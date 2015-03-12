@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title></title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<style type="text/css">
+#mycanvas { border: 5px solid blue; }
+
+</style>
+ <script type='text/javascript'>
+	$(document).ready(function()
+	{
+		$("#draw").click(function()
+		{//access the canvas
+		var ctx = document.getElementById('mycanvas');
+		//use the getContext method
+		//use the getContext method
+		var d = ctx.getContext('2d');
+
+		var x_min = 0;
+		var y_min = 0;
+		var x_max = $("#mycanvas").width();
+		var y_max = $("#mycanvas").height();
+		var delta = 10;
+
+		var x = x_min;
+		var y = y_min;
+		d.strokeStyle = "#eef"; //light lines
+//vert lines
+		d.beginPath();
+		while (x < x_max)
+		{
+			d.moveTo(x+delta, y_min);
+			d.lineTo(x+delta, y_max);
+			x += delta;
+		}
+		//draw lines
+		d.stroke();
+		d.closePath();
+
+//hori lines
+		d.beginPath();
+		while (y < y_max)
+		{
+			d.moveTo(x_min, y+delta);
+			d.lineTo(x_max, y+delta);
+			y += delta;
+		}
+		//draw lines
+		d.stroke();
+		d.closePath();
+
+	d.strokeStyle = "black";
+	//draw the axis lines
+	d.beginPath();
+	d.moveTo(0, y_max/2);
+	d.lineTo(x_max, y_max/2);
+	d.moveTo(x_max/2, 0);
+	d.lineTo(x_max/2, y_max);
+	d.stroke();
+	d.closePath();
+
+	//ex1) graph y = 100*sin(50*x)
+	//ex2) graph y = 0.1*x*x
+	//translate the origin to ( 200, 200)
+	d.translate(200,200);
+	x=-x_max/2;//reset the x
+	delta = 1;
+	d.strokeStyle = "lime";
+	d.beginPath();
+	while(x < x_max)
+	{
+
+	    //ex1) d.lineTo(x+delta, 200*Math.sin(50*(x+delta)));
+	    d.lineTo(x+delta, -0.1*(x+delta)*(x+delta)); //ex2)
+	    x += delta;
+	}
+	//draw the graph
+	d.stroke();
+	d.closePath();
+
+	});
+	});
+ </script>
+</head>
+<body>
+<canvas id='mycanvas' width='400' height='400'>
+Your browser does no support canvas element
+</canvas>
+<p><input type='button' id='draw' value='Please Push' /></p>
+</body>
+
+</html>
