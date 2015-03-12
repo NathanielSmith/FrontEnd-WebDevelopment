@@ -1,0 +1,211 @@
+<!-- Nathaniel D. Smith-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<style type="text/css">
+
+table { margin-left: 30px; border: 1px solid black; border-collapse: collapse; }
+ th, td { border: 1px solid black; padding: .2em .7em;  }
+
+
+ thead { background-color: #333; color: #fff; font-weight: bold;  }
+.product, .thcol1 {width: 100px; text-align: left;}
+.quantity, .uprice, .thcol2, .thcol3, .items, .total {text-align: right; width: 100px; }
+
+</style>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	// 1
+	$("#labor_cost").click(function(){
+		if($("#p1-hours").val() == ""){
+			alert("Please Enter a value for Labor Hours!");
+			return;
+		}
+		var cost = parseInt($("#p1-hours").val());
+		if(cost > 20 || cost < 0){
+			alert("Please enter a valid number of Labor Hours!");
+			return;
+		}
+		var total = cost*35;
+		$("#p1-cost").text("$" + total.toFixed(2));
+		return;
+	}); //end 1
+
+	// 2
+	$("#p2-total_cost").click(function(){
+		var hours = parseFloat($("#p2-hours").val());
+		var parts = parseFloat($("#p2-parts").val());
+
+		if($("#p2-hours").val() == "" || hours < 0){
+			alert("Please Enter a valid value for Labor Hours!");
+			return;
+		}
+		if($("#p2-parts").val() == "" || parts < 0){
+			alert("Please Enter a  valid value for Part Cost!");
+			return;
+		}
+		var total = (hours*35.00) + parts;
+		var tax = total*(0.05);
+		total += tax;
+		$("#p2-tax").text("$" + tax.toFixed(2));
+		$("#p2-total").text("$" + total.toFixed(2));
+	}); //end 2
+
+	// 3
+	$("#p3-total_cost").click(function(){
+		var hours = parseFloat($("#p3-hours").val());
+		var parts = parseFloat($("#p3-parts").val());
+
+		if($("#p3-hours").val() == "" || hours < 0){
+			alert("Please Enter a valid value for Labor Hours!");
+			return;
+		}
+		if($("#p3-parts").val() == "" || parts < 0){
+			alert("Please Enter a  valid value for Part Cost!");
+			return;
+		}
+		if($("#pmp option:selected").text() == "-- select payment method --"){
+			alert("Please select a payment method!");
+			return;
+		}
+		var total = (hours*35.00) + parts;
+		var tax = total*(0.05);
+		total += tax;
+		var charge = 0;
+		if($("#pmp option:selected").text() == "Credit card"){
+			charge = total*(0.035);
+		}
+		$("#p3-tax").text("$" + tax.toFixed(2));
+		$("#p3-total").text("$" + (total+charge).toFixed(2));
+	}); //end  3
+
+	// 4
+	$("#totalamount").click(function(){
+		var part_cost; var total_part_cost = 0; var num_parts; var total_num_parts = 0;
+
+		$(".list").each(function(){
+			num_parts = parseInt($(this).children(".quantity").text());
+			part_cost = parseFloat($(this).children(".uprice").text()) * num_parts;
+			$(this).children(".t-value").text("$" + part_cost.toFixed(2));
+			total_part_cost += part_cost;
+			total_num_parts += num_parts
+		});
+		var taxes = total_part_cost*(0.05);
+		$("#Items").val(total_num_parts);
+		$("#Price").val("$" + total_part_cost.toFixed(2));
+		$("#taxes").val("$" + taxes.toFixed(2));
+		$("#amount").val("$" + (total_part_cost + taxes).toFixed(2));
+	}); //end  4
+
+
+});
+</script>
+
+
+</head><body style="">
+<form name="testForm">
+
+<h2>Nate's Auto Repair Shop</h2>
+<!-- 1 -->
+<h3>Step 1</h3>
+<h3>Estimate Labor Cost</h3>
+<p>Our rate is $35 per hour</p>
+<p>Number of labor hours required: <input id="p1-hours" name="p1-hours" type="text"> <input type="button" value="Estimate labor cost" id="labor_cost"></p>
+<p id="p1-cost"></p>
+<hr>
+
+<!-- 2 -->
+<h3>Step 2</h3>
+<h3>Estimate Repair Cost</h3>
+<table>
+<tbody><tr><td>Number of labor hours required: </td><td><input id="p2-hours" name="p2-hours" type="text"> </td></tr>
+<tr><td>Cost for parts: </td><td><input id="p2-parts" name="p2-parts" type="text"> </td></tr>
+<tr><td><strong>Taxes</strong> (5% sales tax)</td><td><p id="p2-tax"></p></td></tr>
+<tr><td><strong>Total Cost</strong> </td><td><p id="p2-total"></p></td></tr>
+</tbody></table>
+<input type="button" value="Estimate Total cost" id="p2-total_cost"><p></p>
+<p id="p2-cost"></p>
+<hr>
+
+<!-- 3 -->
+<h3>Step 3</h3>
+<h3>Estimate Labor Cost</h3>
+
+<table>
+<tbody><tr><td>Number of labor hours required: </td><td><input id="p3-hours" name="p3-hours" type="text"> </td></tr>
+<tr><td>Cost for parts: </td><td><input id="p3-parts" name="p3-parts" type="text"> </td></tr>
+<tr><td>Payment Method: </td><td><select name="pmt" id="pmp">
+									<option value="0">-- select payment method --</option>
+									<option value="1">Credit card</option>
+									<option value="2">Cash/check</option>
+								</select>
+							</td></tr>
+<tr><td><strong>Taxes</strong> (5% sales tax)</td><td><p id="p3-tax"></p></td></tr>
+<tr><td><strong>Total Cost</strong> </td><td><p id="p3-total"></p></td></tr>
+</tbody></table>
+
+<input type="button" value="Estimate Total cost" id="p3-total_cost"><p></p>
+<p id="p3-cost"></p>
+
+<hr>
+<!-- 4 -->
+<h3>Step 4 </h3>
+<h3>Estimate Repair Cost</h3>
+
+
+<p>Display the total quantity and total price when the "Display Total" button is clicked:</p>
+<table border="0">
+<tbody>
+	<tr><th class="thcol1">Part</th><th class="thcol2">Unit Price</th><th class="thcol3">Quantity</th><th>Cost</th></tr>
+	<tr class="list">
+		<td class="product">Engine Oil </td>
+		<td class="uprice" id="p1">4.50</td>
+		<td class="quantity" id="q1">5</td>
+		<td class="t-value" id="t1"></td>
+	</tr>
+	<tr class="list">
+		<td class="product">Front Brake Rotors</td>
+		<td class="uprice" id="p2">52.50</td>
+		<td class="quantity" id="q2">2</td>
+		<td class="t-value" id="t2"></td>
+	</tr>
+	<tr class="list">
+		<td class="product">Rear Brake Rotors</td>
+		<td class="uprice" id="p3">43.50</td>
+		<td class="quantity" id="q3">2</td>
+		<td class="t-value" id="t3"></td>
+	</tr>
+	<tr class="list">
+			<td class="product">Brake Power Booster</td>
+			<td class="uprice" id="p4">223.99</td>
+			<td class="quantity" id="q4">1</td>
+			<td class="t-value" id="t4"></td>
+	</tr>
+	<tr>
+		<td colspan="3">Total Items</td>
+		<td class="items"><input readonly="readonly" size="3" name="Items" id="Items" type="text"></td>
+	</tr>
+	<tr>
+		<td colspan="3">Cost for Parts</td>
+		<td class="total"><input readonly="readonly" size="10" name="Price" id="Price" type="text"></td>
+	</tr>
+	<tr>
+			<td colspan="3">5% Sales Taxes</td>
+			<td class="total"><input readonly="readonly" size="10" name="taxes" id="taxes" type="text"></td>
+	</tr>
+	<tr>
+			<td colspan="3">Amount Due</td>
+			<td class="total"><input readonly="readonly" size="10" name="amount" id="amount" type="text"></td>
+	</tr>
+
+</tbody>
+</table>
+<p><input type="button" value="Display Total" id="totalamount"></p>
+
+</form>
+
+</body></html>
