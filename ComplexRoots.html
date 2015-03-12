@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+   <head>
+   <style type="text/css">
+   #a, #b, #c {width: 30px}
+   </style>
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+     <script>
+	$(document).ready(function() {
+	// your programming goes here
+
+		$("#checkroots").click(function(){
+			var a = $("#a").val();
+			var b = $("#b").val();
+			var c = $("#c").val();
+
+			if(isNaN(a) || isNaN(b) || isNaN(c) || a == "")
+			  alert("Invalid input! Enter valid coefficients");
+			else
+			  displayRoots(a, b, c);
+		});
+
+		function displayRoots(a, b, c){
+		//calc discriminant
+		  var discriminant = Math.pow(b,2) - 4*a*c;
+		  if(discriminant >= 0 ) {
+		  	var root_1 = 0.5*(-b + Math.sqrt(discriminant))/a;
+		  	var root_2 = 0.5*(-b - Math.sqrt(discriminant))/a;
+			$("#result").html("Roots are: "+ root_1 + ", " +root_2);
+
+		  } else { //discriminant is less than 0
+
+		  	  var root_1 = 0.5*(-b )/a +" + "+ 0.5*Math.sqrt(-discriminant)/a+" <strong>i</strong>";
+
+			  var root_2 = 0.5*(-b )/a +" - "+ 0.5*Math.sqrt(-discriminant)/a+" <strong>i</strong>";
+			$("#result").html("Roots are: "+ root_1 + ", " +root_2);
+
+		}
+
+		}
+	});
+
+
+     </script>
+
+   </head>
+<body>
+
+
+<!-- HTML content -->
+<h2> Solve Quadratic Equation</h>
+
+<p> Enter coefficients of the equation: </p>
+<p><input type='text' name='a' id='a' />x<sup>2</sup> +
+	<input type='text' name='b' id='b' />  x +
+	<input type='text' name='c' id='c' /> = 0 </p>
+<p><input type='button' value='Find roots' id='checkroots' /></p>
+<p id="result"></p>
+
+
+
+</body>
+
+
+
+</html>
+
