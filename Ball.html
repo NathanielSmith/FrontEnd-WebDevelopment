@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <title></title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<style type="text/css">
+#ball { position: relative;
+	left: 0px;
+	top: 0px;
+	width: 50px;
+	height: 50px;
+	background-color: red;
+	border-radius: 25px;
+}
+#box { position: absolute;
+	top: 100px;
+	left: 100px;
+	height: 500px;
+	width: 300px;
+	border: 5px solid brown;}
+</style>
+ <script type='text/javascript'>
+  $(document).ready(function()
+  {
+  //read the initial position
+  	 var topPos = parseInt($("#ball").css('top'));
+ 	 var top_velocity = 5;
+ 	 var maxTop = parseInt($("#box").css('height')) - parseInt($('#ball').css('height'));
+
+
+  var interval = setInterval(function()
+  {
+  	//define the new position
+  	var newTopPos = parseInt($("#ball").css('top')) + top_velocity;
+
+  		if (newTopPos > maxTop || newTopPos < 0)
+  			top_velocity = -top_velocity;
+  		else
+  			$("#ball").css('top', newTopPos + "px");
+  }, 20);
+
+
+  });
+
+ </script>
+</head>
+<body>
+<div id='box'>
+<div id='ball'></div>
+</div>
+
+</body>
+
+</html>
