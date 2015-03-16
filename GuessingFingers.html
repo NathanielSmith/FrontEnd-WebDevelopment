@@ -1,0 +1,56 @@
+<!---Nathaniel Smith--->
+<!doctype html>
+<html>
+<head>
+    <title>Guessing Fingers</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+</head>
+
+<body>
+	
+		<p>What is the number of fingers I am holding up?</p>
+		<p>Guess between 0-10, good luck :) </p>
+		<input id="answer" />
+		<button id="myButton">Submit</button>
+	
+		<script type="text/javascript">	
+		
+			document.getElementById("myButton").onclick=function(){
+		
+			var x=Math.random();
+			
+			x=11*x;
+			
+			x=Math.floor(x);
+		
+			if(x==document.getElementById("answer").value){
+			
+				alert("Correct");
+			
+			}else{
+			
+				alert("Not Correct, my number was: "+x);
+				}	
+			}
+		</script>
+	
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
