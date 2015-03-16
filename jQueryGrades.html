@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+	<head>
+
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script>
+
+
+					$(document).ready(function() {
+
+
+						// your programming goes here
+
+ 								  $("#checkgrade").click(function(){
+
+											//read input
+									var mygrade = $("#score").val();
+									if (mygrade >= 90 )
+										alert("Your grade is A");
+
+									else if (mygrade >= 80 )
+										alert("Your grade is B");
+
+									else if ( mygrade >= 70 )
+										alert("Your grade is C");
+
+									else if ( mygrade >= 60 )
+										alert("Your grade is D");
+
+									else
+										alert("Your grade is F");
+
+
+	});
+
+});
+</script>
+
+
+	</head>
+
+<body>
+<!-- HTML content -->
+
+<p> Enter test score: <input type='text' name='score' id='score' /></p>
+<p><input type='button' value='Check my grade' id='checkgrade' /></p>
+
+
+</body>
+</html>
